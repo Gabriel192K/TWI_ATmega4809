@@ -11,4 +11,3 @@ TWI library for TWI bus communication protocol used on ATmega4809 MCU
 - `ATmega4809` @16MHz using and `Arduino IDE` with a 400kHz `TWI` bus frequency
 
 
-

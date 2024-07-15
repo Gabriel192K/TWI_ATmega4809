@@ -20,10 +20,7 @@ typedef enum TWI_RESULT_enum
     TWI_RESULT_NACK_RECEIVED    = 4,
     TWI_RESULT_ARBITRATION_LOST = 5,
 	TWI_RESULT_BUS_ERROR        = 6,
-    TWI_RESULT_CLKHOLD          = 7,
-	TWI_RESULT_IDLE             = 8,
-    TWI_RESULT_OWNER            = 9,
-    TWI_RESULT_BUSY             = 10,
+    TWI_RESULT_BUSY             = 7,
 }TWI_RESULT_t;
 
 
@@ -33,18 +30,22 @@ class __TWI_ATMEGA4809__
     public:
         __TWI_ATMEGA4809__(TWI_t* twi);
         ~__TWI_ATMEGA4809__();
-        const uint8_t  begin            (const uint32_t frequency);
-        void           setFrequency     (const uint32_t frequency);
-        void           beginTransmission(const uint8_t address);
-        const uint8_t  write            (const uint8_t byte);
-        const uint8_t  endTransmission  (const uint8_t sendStop);
-        const uint8_t  endTransmission  (void);
-        const uint8_t  requestFrom      (const uint8_t address, const uint8_t amount, const uint8_t sendStop);
-        const uint8_t  requestFrom      (const uint8_t address, const uint8_t amount);
-        const uint8_t  available        (void);
-        const uint8_t  read             (void);
-        const uint8_t  end             (void);
-        void           masterISRHandler(void);
+        const uint8_t begin            (const uint32_t frequency);
+        void          setFrequency     (const uint32_t frequency);
+        void          beginTransmission(const uint8_t address);
+        const uint8_t write            (const uint8_t byte);
+        const uint8_t write            (const uint16_t word);
+        const uint8_t write            (const uint32_t dword);
+        const uint8_t write            (const uint8_t* array, const uint8_t size);
+        const uint8_t write            (const void* data, const uint8_t size);
+        const uint8_t endTransmission  (const uint8_t sendStop);
+        const uint8_t endTransmission  (void);
+        const uint8_t requestFrom      (const uint8_t address, const uint8_t amount, const uint8_t sendStop);
+        const uint8_t requestFrom      (const uint8_t address, const uint8_t amount);
+        const uint8_t available        (void);
+        const uint8_t read             (void);
+        const uint8_t end             (void);
+        void          masterISRHandler(void);
     private:
         TWI_t* twi;
         uint8_t began;
@@ -54,10 +55,6 @@ class __TWI_ATMEGA4809__
         volatile uint8_t bytesToProcess;
         volatile uint8_t bytesProcessed;
         volatile uint8_t sendStop;
-        void masterArbitrationLostBusErrorHandler(void);
-        void masterWriteHandler                  (void);
-        void masterReadHandler                   (void);
-        void masterTransactionFinished           (const uint8_t result);
 
 };
 
